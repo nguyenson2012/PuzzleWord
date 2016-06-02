@@ -15,6 +15,7 @@ public class WordObject {
     private String result;
     private int orientation;
     private String imageLink;
+    private int position;
 
     public WordObject() {
         question = "NOT SETUP YET";
@@ -26,7 +27,7 @@ public class WordObject {
         clickedPositionY = NOT_CLICKED;
     }
 
-    public WordObject(int x, int y, String question, String result, int ori, String imageLink) {
+    public WordObject(int x, int y, String question, String result, int ori, String imageLink,int positionQuestion) {
         this.question = question;
         this.result = result;
         this.imageLink = imageLink;
@@ -35,6 +36,7 @@ public class WordObject {
         orientation = ori;
         clickedPositionX = NOT_CLICKED;
         clickedPositionY = NOT_CLICKED;
+        this.position=positionQuestion;
     }
 
     public static int getClickedPositionX() {
@@ -136,5 +138,13 @@ public class WordObject {
             }
         }
         return myResult;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

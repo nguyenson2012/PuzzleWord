@@ -14,4 +14,7 @@
     <dimen name="button_blue_horizontal_margin">0.5dp</dimen>
     <dimen name="button_blue_vertical_margin">-3dp</dimen>
     <dimen name="image_question_size">40dp</dimen>
+    <dimen name="image_game_puzzle">200dp</dimen>
+    <dimen name="button_function_height">30dp</dimen>
+    <dimen name="textsize_button_function">10sp</dimen>
 </resources>

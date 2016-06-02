@@ -17,4 +17,9 @@
     <!-- AdMob ad unit IDs -->
     <string name="banner_home_footer">ca-app-pub-3120536913205473/5975042732</string>
     <string name="interstitial_full_screen">ca-app-pub-3120536913205473/3021576335</string>
+    <string name="resume">RESUME</string>
+    <string name="choose_level">LEVEL</string>
+    <string name="rate">RATE</string>
+    <string name="share">SHARE</string>
+    <string name="like">LIKE</string>
 </resources>

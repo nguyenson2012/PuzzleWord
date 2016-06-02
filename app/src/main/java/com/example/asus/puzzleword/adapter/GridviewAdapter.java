@@ -151,7 +151,7 @@ public class GridviewAdapter extends BaseAdapter {
             if (listWord.size() > 0) {
                 for (WordObject wordObject : listWord)
                     if (positionX == wordObject.startX && positionY == wordObject.startY)
-                        textViewNumberQuestion.setText("1");
+                        textViewNumberQuestion.setText(wordObject.getPosition()+"");
             }
 
 

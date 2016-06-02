@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         getListBitmapImageStage();
 
 
-        //onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY*NUM_OF_COLLUMN);
+        onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
 
     }
 
@@ -249,6 +249,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
                     if (!allLevelDone)
                         setupGridView();
                     getListBitmapImageStage();
+                    onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY*NUM_OF_COLLUMN);
                     timeStartLevel = (int) (System.currentTimeMillis() / 1000);
                 } else
                     Toast.makeText(getApplicationContext(), "You Lose", Toast.LENGTH_SHORT).show();
@@ -483,7 +484,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 
     private void getCurrentLevel() {
         Intent intent = getIntent();
-        currentLevel = intent.getIntExtra("levelposition", 0) + 1;
+        currentLevel = intent.getIntExtra("levelposition", 1);
     }
 
     private void increseLevel() {
@@ -495,8 +496,10 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         } else {
             allLevelDone = true;
         }
-        editor.putInt("currentLevel", currentLevel);
-        editor.commit();
+        if(currentLevel>pre.getInt("currentLevel",1)) {
+            editor.putInt("currentLevel", currentLevel);
+            editor.commit();
+        }
     }
 
     class KeyboardButton {
