@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ProjectDemo</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="check_answer">Check</string>
+    <string name="solve">SOLVE</string>
+    <string name="clear">CLEAR</string>
+    <string name="Answer">Answer</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="developer_email">email</string>
+    <string name="subject_email">email</string>
+    <string name="link_google_play_for_share">link</string>
+    <string name="share_app_title">Share Now</string>
+
+    <!-- AdMob ad unit IDs -->
+    <string name="banner_home_footer">ca-app-pub-3120536913205473/5975042732</string>
+    <string name="interstitial_full_screen">ca-app-pub-3120536913205473/3021576335</string>
+</resources>

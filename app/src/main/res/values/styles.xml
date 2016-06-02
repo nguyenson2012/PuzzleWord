@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+
+    </style>
+
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Base application theme. -->
+
+
+    <style name="ApplicationTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/theme_primary_light</item>
+        <item name="colorPrimaryDark">@color/theme_primary_dark</item>
+        <item name="colorAccent">@color/theme_primary_accent</item>
+        <item name="android:windowBackground">@color/theme_window_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:screenOrientation">landscape</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--<style name="SplashTheme" parent="ApplicationTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>-->
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="ToolbarPopUpTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/theme_window_background</item>
+    </style>
+
+    <style name="FlashCardButton" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!--<style name="RedButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_red</item>
+    </style>
+
+    <style name="GreenButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_green</item>
+    </style>-->
+
+    <style name="BlueButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_blue</item>
+    </style>
+
+    <!--<style name="SettingsButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_settings</item>
+    </style>
+
+    <style name="MoreButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_more</item>
+    </style>
+
+    <style name="RateButton" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_rate</item>
+    </style>-->
+</resources>
