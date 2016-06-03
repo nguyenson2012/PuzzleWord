@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -57,12 +56,12 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
     private WordObjectsManager objManger = WordObjectsManager.getInstance();
     private GridviewAdapter adapter;
     private Button btCheckAnswer;
-    private Button btSolve;
+//    private Button btSolve;
     private Button btClear;
     private DisplayImageOptions opt;
     private ImageLoader imageLoader;
     private AdView mAdView;
-    private ArrayList<WordObject> listQuestion;
+//    private ArrayList<WordObject> listQuestion;
     private ArrayList<Bitmap> listBitmapImageQuestion;
     private StaticVariable staticVariable;
     private String prefName = "data";
@@ -102,20 +101,22 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //            PARENT_VERTICAL_MARGIN = 1;
         setupKeyboard();
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LINE_HEIGHT);
-        params.setMargins(0, PARENT_VERTICAL_MARGIN, 0, PARENT_VERTICAL_MARGIN);
+        //TODO
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 10);
+//        params.setMargins(0, PARENT_VERTICAL_MARGIN, 0, PARENT_VERTICAL_MARGIN);
         txtView_question = (TextView) findViewById(R.id.textViewQuestion);
-        txtView_question.setLayoutParams(params);
+//        txtView_question.setLayoutParams(params);
+
 //        txtView_question.setMinimumHeight(0);
 //        txtView_question.setHeight((screenHeight - gridView.getMinimumHeight() - mAdView.getMinimumHeight() - PARENT_VERTICAL_MARGIN * 12) / 5);
 //        txtView_question.setHeight(screenWidth/10);
         imgView_question = (ImageView) findViewById(R.id.imageView);
+//        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+//                , LINE_HEIGHT*4);
+//        imgView_question.setLayoutParams(params2);
 
         getListBitmapImageStage();
-
-
         onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
-
     }
 
 
@@ -193,17 +194,18 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         keyboard_btn[25] = new KeyboardButton((Button) findViewById(R.id.btnM), "M");
         keyboard_btn[26] = new KeyboardButton((Button) findViewById(R.id.btnDel), "Del");
         btCheckAnswer = (Button) findViewById(R.id.btcheckAnswer);
-        btSolve = (Button) findViewById(R.id.btSolve);
+        //TODO
+//        btSolve = (Button) findViewById(R.id.btSolve);
         btClear = (Button) findViewById(R.id.btClear);
 //        txtView_question=(TextView)findViewById(R.id.textViewQuestion);
 
-        Log.e("LOL", "PARENT_VERTICAL_MARGIN = " + PARENT_VERTICAL_MARGIN);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth / 5, LINE_HEIGHT);
-        params.setMargins(LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN, LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN);
+//        Log.e("LOL", "PARENT_VERTICAL_MARGIN = " + PARENT_VERTICAL_MARGIN);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth / 5, LINE_HEIGHT);
+//        params.setMargins(LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN, LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN);
 
-        btCheckAnswer.setLayoutParams(params);
-        btSolve.setLayoutParams(params);
-        btClear.setLayoutParams(params);
+//        btCheckAnswer.setLayoutParams(params);
+//        btSolve.setLayoutParams(params);
+//        btClear.setLayoutParams(params);
 
         int BTN_KEYBOARD_MARGIN = screenWidth / (6 * NUM_OF_KEYBOARD_PER_ROW);
         int tempWidth = (screenWidth - BTN_KEYBOARD_MARGIN * (NUM_OF_KEYBOARD_PER_ROW + 1)) / NUM_OF_KEYBOARD_PER_ROW;
@@ -244,7 +246,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
                 if (checkAnswer()) {
                     Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT).show();
                     updateTimeCompleteLevel(currentLevel);
-                    increseLevel();
+                    increaseLevel();
                     //initializeQuestion();
                     if (!allLevelDone)
                         setupGridView();
@@ -255,12 +257,13 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
                     Toast.makeText(getApplicationContext(), "You Lose", Toast.LENGTH_SHORT).show();
             }
         });
-        btSolve.setOnClickListener(new View.OnClickListener() {
+        //TODO
+        /*btSolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 solveLevel();
             }
-        });
+        });*/
         btClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -322,7 +325,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //        objManger.add(new WordObject(0, 0, "I ..... a book", "READ", WordObject.HORIZONTAL, "http://i.imgur.com/AlGqiAD.jpg"));
 //        objManger.add(new WordObject(0, 2, "...... up!", "STAND", WordObject.HORIZONTAL, "http://i.imgur.com/vOnIjew.jpg"));
         objManger.setObjectArrayList(staticVariable.getAllStage().get(currentLevel - 1).getListQuestion());
-        listQuestion = objManger.getObjectArrayList();
+//        listQuestion = objManger.getObjectArrayList();
     }
 
     private void setupGridView() {
@@ -401,7 +404,11 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         int positionY = position / NUM_OF_COLLUMN;
 //        changeQuestion(positionX,positionY);
         txtView_question.setText(objManger.getObjectAt(positionX, positionY).getQuestion());
-        for (int i = 0; i < listQuestion.size(); i++) {
+        imageLoader.displayImage(objManger.getObjectAt(positionX, positionY).getImageLink(), imgView_question, opt, new SimpleImageLoadingListener() {
+
+        });
+
+        /*for (int i = 0; i < listQuestion.size(); i++) {
             WordObject wordObject = listQuestion.get(i);
             if (wordObject.getResult().equals(objManger.getObjectAt(positionX, positionY).getResult())) {
                 //imgView_question.setImageBitmap(listBitmapImageQuestion.get(i));
@@ -409,7 +416,8 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 
                 });
             }
-        }
+        }*/
+//        Log.e("LOL","onItemGridViewClick");
     }
 
     private boolean checkAnswer() {
@@ -487,7 +495,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         currentLevel = intent.getIntExtra("levelposition", 1);
     }
 
-    private void increseLevel() {
+    private void increaseLevel() {
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
@@ -518,7 +526,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         protected ArrayList<Bitmap> doInBackground(String... param) {
             listBitmapImageQuestion = new ArrayList<Bitmap>();
             // TODO Auto-generated method stub
-            for (WordObject wordObject : listQuestion) {
+            for (WordObject wordObject : objManger.getObjectArrayList()) {
                 imageLoader.loadImage(wordObject.getImageLink(), opt, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -534,8 +542,6 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         @Override
         protected void onPreExecute() {
             Log.i("Async-Example", "onPreExecute Called");
-
-
         }
 
         @Override

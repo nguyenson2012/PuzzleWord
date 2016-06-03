@@ -10,7 +10,8 @@
     <dimen name="card_view_width">60dp</dimen>
     <dimen name="image_product_width">80dp</dimen>
     <dimen name="recyclerview_level_padding">10dp</dimen>
-    <dimen name="vertical_margin">1dp</dimen>
+    <dimen name="vertical_margin">3dp</dimen>
+    <dimen name="horizontal_margin">3dp</dimen>
     <dimen name="button_blue_horizontal_margin">0.5dp</dimen>
     <dimen name="button_blue_vertical_margin">-3dp</dimen>
     <dimen name="image_question_size">40dp</dimen>
