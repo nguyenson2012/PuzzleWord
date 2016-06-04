@@ -50,8 +50,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/image_question_size"
+            android:layout_height="@dimen/image_question_size"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:src="@android:drawable/btn_star_big_on"/>
@@ -72,7 +72,7 @@
             android:layout_marginBottom="@dimen/vertical_margin"
             android:layout_marginTop="@dimen/vertical_margin"
             android:layout_marginRight="@dimen/horizontal_margin"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btcheckAnswer"
                 style="@style/BlueButton"
@@ -413,7 +413,7 @@
                 android:layout_marginLeft="@dimen/button_blue_horizontal_margin"
                 android:layout_marginRight="@dimen/button_blue_horizontal_margin"
                 android:padding="0dp"
-                android:text="Del" />
+                android:drawableBottom="@drawable/ic_backspace" />
         </LinearLayout>
     </LinearLayout>
 

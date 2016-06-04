@@ -1,3 +1,4 @@
+
 package com.example.asus.puzzleword.activity;
 
 import android.app.Activity;
@@ -56,12 +57,12 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
     private WordObjectsManager objManger = WordObjectsManager.getInstance();
     private GridviewAdapter adapter;
     private Button btCheckAnswer;
-//    private Button btSolve;
+    //    private Button btSolve;
     private Button btClear;
     private DisplayImageOptions opt;
     private ImageLoader imageLoader;
     private AdView mAdView;
-//    private ArrayList<WordObject> listQuestion;
+    //    private ArrayList<WordObject> listQuestion;
     private ArrayList<Bitmap> listBitmapImageQuestion;
     private StaticVariable staticVariable;
     private String prefName = "data";
@@ -413,7 +414,6 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
             if (wordObject.getResult().equals(objManger.getObjectAt(positionX, positionY).getResult())) {
                 //imgView_question.setImageBitmap(listBitmapImageQuestion.get(i));
                 imageLoader.displayImage(wordObject.getImageLink(), imgView_question, opt, new SimpleImageLoadingListener() {
-
                 });
             }
         }*/
