@@ -24,6 +24,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonResume,buttonLevel;
     private Button buttonRate,buttonShare,buttonLike;
     private int currentLevel;
+    private boolean isPlayGame=false;
     private String prefName="data";
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
@@ -40,6 +41,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getCurrentLevel();
+        if(isPlayGame)
+            buttonResume.setVisibility(View.VISIBLE);
+    }
+
     private void registerForEvent() {
         buttonResume.setOnClickListener(this);
         buttonLevel.setOnClickListener(this);
@@ -51,10 +60,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private void getCurrentLevel() {
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
-        SharedPreferences.Editor editor = pre.edit();
-        //editor.clear();
-        editor.commit();
+//        SharedPreferences.Editor editor=pre.edit();
+//        editor.clear();
+//        editor.commit();
         currentLevel = pre.getInt("currentLevel", 1);
+        isPlayGame=pre.getBoolean("PlayGame",false);
+
     }
 
     private void setupView() {
@@ -70,6 +81,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonRate=(Button)findViewById(R.id.button_rate_app);
         buttonShare=(Button)findViewById(R.id.button_share_app);
         buttonLike=(Button)findViewById(R.id.button_like_app);
+        if(!isPlayGame)
+            buttonResume.setVisibility(View.GONE);
     }
 
     @Override

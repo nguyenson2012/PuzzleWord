@@ -58,6 +58,6 @@ public class GridViewLevelAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     }
 
     public void changeCurrentLevel(int currentLevel) {
-        this.currentLevel = currentLevel;
+        this.currentLevel = currentLevel+1;
     }
 }

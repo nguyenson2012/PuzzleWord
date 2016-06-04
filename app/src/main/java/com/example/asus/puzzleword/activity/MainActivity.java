@@ -66,6 +66,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
     private ArrayList<Bitmap> listBitmapImageQuestion;
     private StaticVariable staticVariable;
     private String prefName = "data";
+    private int doneLevel;
     private int currentLevel;
     private int timeStartLevel = 0;
     private int timeCompleteLevel = 0;
@@ -77,8 +78,10 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setPlayGame();
         staticVariable = StaticVariable.getInstance();
-        getCurrentLevel();
+        getLevelPosition();
+        getDoneLevel();
         timeStartLevel = (int) (System.currentTimeMillis() / 1000);
         context = this;
         DisplayMetrics metrics = new DisplayMetrics();
@@ -116,14 +119,28 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //                , LINE_HEIGHT*4);
 //        imgView_question.setLayoutParams(params2);
 
-        getListBitmapImageStage();
+        //getListBitmapImageStage();
         onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
+    }
+
+    private void getDoneLevel() {
+        SharedPreferences pre = getSharedPreferences
+                (prefName, MODE_PRIVATE);
+        doneLevel=pre.getInt("doneLevel",0);
+    }
+
+    private void setPlayGame() {
+        SharedPreferences pre = getSharedPreferences
+                (prefName, MODE_PRIVATE);
+        SharedPreferences.Editor editor=pre.edit();
+        editor.putBoolean("PlayGame",true);
+        editor.commit();
     }
 
 
     private void getListBitmapImageStage() {
         listBitmapImageQuestion = new ArrayList<Bitmap>();
-        listBitmapImageQuestion = StaticVariable.getBitMapImageStageMap().get(new Integer(currentLevel));
+        listBitmapImageQuestion = StaticVariable.getBitMapImageStageMap().get(new Integer(doneLevel+1));
         if (listBitmapImageQuestion.size() == 0)
             new ImageDownloader().execute("");
     }
@@ -246,13 +263,13 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
             public void onClick(View v) {
                 if (checkAnswer()) {
                     Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT).show();
-                    updateTimeCompleteLevel(currentLevel);
+                    updateTimeCompleteLevel(doneLevel);
                     increaseLevel();
                     //initializeQuestion();
                     if (!allLevelDone)
                         setupGridView();
                     getListBitmapImageStage();
-                    onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY*NUM_OF_COLLUMN);
+                    onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
                     timeStartLevel = (int) (System.currentTimeMillis() / 1000);
                 } else
                     Toast.makeText(getApplicationContext(), "You Lose", Toast.LENGTH_SHORT).show();
@@ -274,16 +291,16 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //        adapter.notifyDataSetChanged();
     }
 
-    private void updateTimeCompleteLevel(int currentLevel) {
+    private void updateTimeCompleteLevel(int doneLevel) {
 //        Calendar calendar=Calendar.getInstance();
 //        int timestopLevel=calendar.get(Calendar.SECOND);
         int timestopLevel = (int) (System.currentTimeMillis() / 1000);
         timeCompleteLevel = timestopLevel - timeStartLevel;
-        staticVariable.getAllStage().get(currentLevel - 1).setSecondComplete(timeCompleteLevel);
+        staticVariable.getAllStage().get(doneLevel).setSecondComplete(timeCompleteLevel);
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
-        editor.putInt(staticVariable.getAllStage().get(currentLevel - 1).getDescriptionStage() + "", timeCompleteLevel);
+        editor.putInt(staticVariable.getAllStage().get(doneLevel).getDescriptionStage() + "", timeCompleteLevel);
         editor.commit();
         timeStartLevel = 0;
         timeCompleteLevel = 0;
@@ -490,7 +507,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
     }
 
-    private void getCurrentLevel() {
+    private void getLevelPosition() {
         Intent intent = getIntent();
         currentLevel = intent.getIntExtra("levelposition", 1);
     }
@@ -499,16 +516,19 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
-        if (currentLevel < staticVariable.getAllStage().size()) {
+        if (doneLevel < staticVariable.getAllStage().size()) {
+            doneLevel++;
             currentLevel++;
         } else {
             allLevelDone = true;
         }
-        if(currentLevel>pre.getInt("currentLevel",1)) {
-            editor.putInt("currentLevel", currentLevel);
+        if(doneLevel>pre.getInt("doneLevel",0)) {
+            editor.putInt("doneLevel", doneLevel);
+            editor.putInt("currentLevel",currentLevel);
             editor.commit();
         }
     }
+
 
     class KeyboardButton {
         Button button;
@@ -531,7 +551,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        StaticVariable.getBitMapImageStageMap().get(new Integer(currentLevel)).add(loadedImage);
+                        StaticVariable.getBitMapImageStageMap().get(new Integer(doneLevel+1)).add(loadedImage);
                         listBitmapImageQuestion.add(loadedImage);
                     }
                 });

@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     private int screenWidth;
     private int screenHeight;
-    private int currentLevel = 1;
+    private int doneLevel = 0;
     private String prefName = "data";
 
     @Override
@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
         getTimeCompleteStage();
-        getCurrentLevel();
+        getdoneLevel();
         setDefaultDataLevel();
         setUpView();
         setAdapterForRecyclerView();
@@ -54,18 +54,18 @@ public class HomeActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         getTimeCompleteStage();
-        getCurrentLevel();
-        rcAdapter.changeCurrentLevel(currentLevel);
+        getdoneLevel();
+        rcAdapter.changeCurrentLevel(doneLevel);
         rcAdapter.notifyDataSetChanged();
     }
 
-    private void getCurrentLevel() {
+    private void getdoneLevel() {
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         //editor.clear();
         editor.commit();
-        currentLevel = pre.getInt("currentLevel", 1);
+        doneLevel = pre.getInt("doneLevel", 0);
     }
 
     private void getTimeCompleteStage() {
@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerViewLevel.addOnItemTouchListener(new RecyclerItemClickListener(HomeActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        if (position < currentLevel) {
+                        if (position < doneLevel+1) {
                             // TODO Handle item click
                             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                             intent.putExtra("levelposition", position+1);
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(HomeActivity.this, 2);
         recyclerViewLevel.setHasFixedSize(true);
         recyclerViewLevel.setLayoutManager(gridLayoutManager);
-        rcAdapter = new GridViewLevelAdapter(HomeActivity.this, stageItems, currentLevel);
+        rcAdapter = new GridViewLevelAdapter(HomeActivity.this, stageItems, doneLevel+1);
         recyclerViewLevel.setAdapter(rcAdapter);
         recyclerViewLevel.addItemDecoration(new GridSpacingItemDecoration(column, spacing, includeEdge));
     }
