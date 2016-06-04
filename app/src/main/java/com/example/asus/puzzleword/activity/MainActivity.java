@@ -1,4 +1,3 @@
-
 package com.example.asus.puzzleword.activity;
 
 import android.app.Activity;
@@ -18,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,22 +43,25 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
     public static final int AD_HEIGHT = 50;
     public static final int NUM_OF_COLLUMN = 10;
     public static final int NUM_OF_ROW = NUM_OF_COLLUMN;
-    public static final int NUM_OF_KEYBOARD_PER_ROW = 10;
+    public static final int MAX_NUM_OF_KEYBOARD_BTN_PER_ROW = 10;
     private static GridView gridView;
-    public int PARENT_VERTICAL_MARGIN;
-    public int LINE_HEIGHT;
+//    public int PARENT_VERTICAL_MARGIN;
+    private int LINE_HEIGHT;
+    private int BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT;
+    private int BTN_KEYBOARD_EDGE_SIZE;
     private int screenWidth = 0;
     private int screenHeight = 0;
     private TextView txtView_question;
     private ImageView imgView_question;
-    private Context context;
+//    private Context context;
     private KeyboardButton[] keyboard_btn;
+    private ImageButton del_btn;
     private String[][] gridViewData = new String[NUM_OF_COLLUMN][NUM_OF_ROW];//gridViewData[x][y]
     private WordObjectsManager objManger = WordObjectsManager.getInstance();
     private GridviewAdapter adapter;
-    private Button btCheckAnswer;
-    //    private Button btSolve;
-    private Button btClear;
+    private ImageButton btCheckAnswer;
+//    private Button btSolve;
+    private ImageButton btClear;
     private DisplayImageOptions opt;
     private ImageLoader imageLoader;
     private AdView mAdView;
@@ -83,7 +86,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         getLevelPosition();
         getDoneLevel();
         timeStartLevel = (int) (System.currentTimeMillis() / 1000);
-        context = this;
+//        context = this;
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screenWidth = metrics.widthPixels;
@@ -98,27 +101,27 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         initImageLoader(getApplicationContext());
         setupImageDisplayOptions();
         setupGridView();
+        //TODO
+//        LINE_HEIGHT = screenWidth / 13;
+        LINE_HEIGHT = (screenHeight - gridView.getMinimumHeight()
+                - mAdView.getMinimumHeight())/5;
+        BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = LINE_HEIGHT/8; // If need to adjust, change here
+        BTN_KEYBOARD_EDGE_SIZE = LINE_HEIGHT-2*BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT;
+        //If the size above is not correct
+        if(BTN_KEYBOARD_EDGE_SIZE*MAX_NUM_OF_KEYBOARD_BTN_PER_ROW+
+                BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT*(MAX_NUM_OF_KEYBOARD_BTN_PER_ROW+1)>screenWidth)
+        {
+            int temp = screenWidth/((MAX_NUM_OF_KEYBOARD_BTN_PER_ROW));
+            BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = temp/8; // If need to adjust, change here
+            BTN_KEYBOARD_EDGE_SIZE = temp-2*BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT;
+        }
 
-        LINE_HEIGHT = screenWidth / 13;
-        PARENT_VERTICAL_MARGIN = (screenHeight - gridView.getMinimumHeight() - mAdView.getMinimumHeight() - 5 * LINE_HEIGHT) / 12;
-//        if(PARENT_VERTICAL_MARGIN<1)
-//            PARENT_VERTICAL_MARGIN = 1;
+        txtView_question = (TextView) findViewById(R.id.textViewQuestion);
+        imgView_question = (ImageView) findViewById(R.id.imageView);
+
         setupKeyboard();
 
-        //TODO
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 10);
-//        params.setMargins(0, PARENT_VERTICAL_MARGIN, 0, PARENT_VERTICAL_MARGIN);
-        txtView_question = (TextView) findViewById(R.id.textViewQuestion);
-//        txtView_question.setLayoutParams(params);
-
-//        txtView_question.setMinimumHeight(0);
-//        txtView_question.setHeight((screenHeight - gridView.getMinimumHeight() - mAdView.getMinimumHeight() - PARENT_VERTICAL_MARGIN * 12) / 5);
-//        txtView_question.setHeight(screenWidth/10);
-        imgView_question = (ImageView) findViewById(R.id.imageView);
-//        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-//                , LINE_HEIGHT*4);
-//        imgView_question.setLayoutParams(params2);
-
+        getListBitmapImageStage();
         //getListBitmapImageStage();
         onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
     }
@@ -210,52 +213,63 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         keyboard_btn[23] = new KeyboardButton((Button) findViewById(R.id.btnB), "B");
         keyboard_btn[24] = new KeyboardButton((Button) findViewById(R.id.btnN), "N");
         keyboard_btn[25] = new KeyboardButton((Button) findViewById(R.id.btnM), "M");
-        keyboard_btn[26] = new KeyboardButton((Button) findViewById(R.id.btnDel), "Del");
-        btCheckAnswer = (Button) findViewById(R.id.btcheckAnswer);
-        //TODO
+//        keyboard_btn[26] = new KeyboardButton((Button) findViewById(R.id.btnDel), "Del");
+
+        btCheckAnswer = (ImageButton) findViewById(R.id.btcheckAnswer);
+
 //        btSolve = (Button) findViewById(R.id.btSolve);
-        btClear = (Button) findViewById(R.id.btClear);
+        btClear = (ImageButton) findViewById(R.id.btClear);
 //        txtView_question=(TextView)findViewById(R.id.textViewQuestion);
 
-//        Log.e("LOL", "PARENT_VERTICAL_MARGIN = " + PARENT_VERTICAL_MARGIN);
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth / 5, LINE_HEIGHT);
-//        params.setMargins(LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN, LINE_HEIGHT / 2, PARENT_VERTICAL_MARGIN);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(BTN_KEYBOARD_EDGE_SIZE+BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT
+                , BTN_KEYBOARD_EDGE_SIZE+BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT);
+        params.setMargins(0,0,BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT,BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT);
 
-//        btCheckAnswer.setLayoutParams(params);
+        btCheckAnswer.setLayoutParams(params);
 //        btSolve.setLayoutParams(params);
-//        btClear.setLayoutParams(params);
+        btClear.setLayoutParams(params);
 
-        int BTN_KEYBOARD_MARGIN = screenWidth / (6 * NUM_OF_KEYBOARD_PER_ROW);
-        int tempWidth = (screenWidth - BTN_KEYBOARD_MARGIN * (NUM_OF_KEYBOARD_PER_ROW + 1)) / NUM_OF_KEYBOARD_PER_ROW;
-        //change left and right margin according to the size of button
-        if (LINE_HEIGHT < tempWidth) {
-            BTN_KEYBOARD_MARGIN = (screenWidth - NUM_OF_KEYBOARD_PER_ROW * LINE_HEIGHT) / (2 * (NUM_OF_KEYBOARD_PER_ROW + 1));
-        } else {
-            BTN_KEYBOARD_MARGIN = (screenWidth - NUM_OF_KEYBOARD_PER_ROW * tempWidth) / (2 * (NUM_OF_KEYBOARD_PER_ROW + 1));
-        }
-        for (int i = 0; i < keyboard_btn.length; i++) {
-            //Make button square
-            if (LINE_HEIGHT < tempWidth)
-                keyboard_btn[i].button = setLayoutButton(keyboard_btn[i].button
-                        , LINE_HEIGHT, LINE_HEIGHT, BTN_KEYBOARD_MARGIN);
-            else
-                keyboard_btn[i].button = setLayoutButton(keyboard_btn[i].button
-                        , tempWidth, tempWidth, BTN_KEYBOARD_MARGIN);
+        //TODO
+        for (int i = 0; i < keyboard_btn.length-1; i++) {//exclude button del
+            keyboard_btn[i].button = setLayoutButton(keyboard_btn[i].button
+                    , BTN_KEYBOARD_EDGE_SIZE, BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT);
         }
 
+        //Setup for Del button
+        del_btn = (ImageButton)findViewById(R.id.btnDel);
+        del_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    gridViewData[WordObject.getClickedPositionX()][WordObject.getClickedPositionY()] = "";
+                    adapter.backClickedPosition();
+                    adapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Log.e("MainActivity", "Not Clicked any cell yet.");
+                }
+            }
+        });
+        del_btn = setLayoutImageButton(del_btn, BTN_KEYBOARD_EDGE_SIZE, BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT);
 
         setOnTouchKeyboard();
     }
 
-    private Button setLayoutButton(Button v, int Width, int height, int margin) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Width, height);
-        params.setMargins(margin, 0, margin, 0);
+    private ImageButton setLayoutImageButton(ImageButton v, int edgeSize, int margin_left_and_right) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(edgeSize, edgeSize);
+        params.setMargins(margin_left_and_right, 0, margin_left_and_right, 0);
+        v.setLayoutParams(params);
+        return v;
+    }
+
+    private Button setLayoutButton(Button v, int edgeSize, int margin_left_and_right) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(edgeSize, edgeSize);
+        params.setMargins(margin_left_and_right, 0, margin_left_and_right, 0);
         v.setLayoutParams(params);
         return v;
     }
 
     private void setOnTouchKeyboard() {
-        for (int i = 0; i < keyboard_btn.length; i++) {
+        for (int i = 0; i < keyboard_btn.length-1; i++) {//exclude button del
             setOnClickEachButton(keyboard_btn[i]);
         }
         btCheckAnswer.setOnClickListener(new View.OnClickListener() {
@@ -461,7 +475,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         return checkAnswer;
     }
 
-    private void solveLevel() {
+    /*private void solveLevel() {
         for (WordObject question : objManger.getObjectArrayList()) {
             String answer = question.getResult();
             int firstX = question.startX;
@@ -477,7 +491,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
             }
             adapter.notifyDataSetChanged();
         }
-    }
+    }*/
 
     private void clearLevel() {
         for (WordObject question : objManger.getObjectArrayList()) {

@@ -55,6 +55,19 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <style name="FlashCardImageButton" parent="@android:style/Widget.ImageButton">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
     <!--<style name="RedButton" parent="FlashCardButton">
         <item name="android:background">@drawable/btn_red</item>
     </style>
@@ -65,6 +78,22 @@
 
     <style name="BlueButton" parent="FlashCardButton">
         <item name="android:background">@drawable/btn_blue</item>
+    </style>
+
+    <style name="BlueImageButton" parent="FlashCardImageButton">
+        <item name="android:background">@drawable/btn_image_blue</item>
+    </style>
+
+    <style name="WhiteCell" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_white_cell</item>
+    </style>
+
+    <style name="RedCell" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_red_cell</item>
+    </style>
+
+    <style name="YellowCell" parent="FlashCardButton">
+        <item name="android:background">@drawable/btn_yellow_cell</item>
     </style>
 
     <!--<style name="SettingsButton" parent="FlashCardButton">
