@@ -121,7 +121,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 
         setupKeyboard();
 
-        getListBitmapImageStage();
+        //getListBitmapImageStage();
         //getListBitmapImageStage();
         onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
     }
@@ -277,12 +277,12 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
             public void onClick(View v) {
                 if (checkAnswer()) {
                     Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT).show();
-                    updateTimeCompleteLevel(doneLevel);
+                    updateTimeCompleteLevel(currentLevel);
                     increaseLevel();
                     //initializeQuestion();
                     if (!allLevelDone)
                         setupGridView();
-                    getListBitmapImageStage();
+                    //getListBitmapImageStage();
                     onItemGridViewClick(objManger.get(0).startX + objManger.get(0).startY * NUM_OF_COLLUMN);
                     timeStartLevel = (int) (System.currentTimeMillis() / 1000);
                 } else
@@ -305,16 +305,16 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //        adapter.notifyDataSetChanged();
     }
 
-    private void updateTimeCompleteLevel(int doneLevel) {
+    private void updateTimeCompleteLevel(int currentLevel) {
 //        Calendar calendar=Calendar.getInstance();
 //        int timestopLevel=calendar.get(Calendar.SECOND);
         int timestopLevel = (int) (System.currentTimeMillis() / 1000);
         timeCompleteLevel = timestopLevel - timeStartLevel;
-        staticVariable.getAllStage().get(doneLevel).setSecondComplete(timeCompleteLevel);
+        staticVariable.getAllStage().get(currentLevel-1).setSecondComplete(timeCompleteLevel);
         SharedPreferences pre = getSharedPreferences
                 (prefName, MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
-        editor.putInt(staticVariable.getAllStage().get(doneLevel).getDescriptionStage() + "", timeCompleteLevel);
+        editor.putInt(staticVariable.getAllStage().get(currentLevel-1).getDescriptionStage() + "", timeCompleteLevel);
         editor.commit();
         timeStartLevel = 0;
         timeCompleteLevel = 0;
