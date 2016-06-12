@@ -127,7 +127,7 @@ public class GridviewAdapter extends BaseAdapter {
         metrics = context.getResources().getDisplayMetrics();
         cell.setMinimumHeight(0);
 //        cell.setHeight(MainActivity.getRowHeight());
-        cell.setHeight((int) ((metrics.widthPixels / MainActivity.NUM_OF_ROW) * 0.9));
+        cell.setHeight((int) ((metrics.widthPixels / MainActivity.NUM_OF_ROW) * 0.9) -2);
 
         //set default text
 //        cell.setText(Integer.toString(position));

@@ -105,14 +105,14 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
 //        LINE_HEIGHT = screenWidth / 13;
         LINE_HEIGHT = (screenHeight - gridView.getMinimumHeight()
                 - mAdView.getMinimumHeight())/5;
-        BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = LINE_HEIGHT/8; // If need to adjust, change here
+        BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = LINE_HEIGHT/12; // If need to adjust, change here
         BTN_KEYBOARD_EDGE_SIZE = LINE_HEIGHT-2*BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT;
         //If the size above is not correct
         if(BTN_KEYBOARD_EDGE_SIZE*MAX_NUM_OF_KEYBOARD_BTN_PER_ROW+
                 BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT*(MAX_NUM_OF_KEYBOARD_BTN_PER_ROW+1)>screenWidth)
         {
             int temp = screenWidth/((MAX_NUM_OF_KEYBOARD_BTN_PER_ROW));
-            BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = temp/8; // If need to adjust, change here
+            BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT = temp/12; // If need to adjust, change here
             BTN_KEYBOARD_EDGE_SIZE = temp-2*BTN_KEYBOARD_MARGIN_LEFT_AND_RIGHT;
         }
 
@@ -384,8 +384,8 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         gridView.setAdapter(adapter);
         gridView.setNumColumns(NUM_OF_COLLUMN);
 //        gridView.setColumnWidth((int) ((gridView.getWidth() / NUM_OF_COLLUMN) * 0.9));
-        gridView.setMinimumWidth(screenWidth);
-        setGridViewBG();
+        gridView.setMinimumWidth(screenWidth - NUM_OF_COLLUMN*2);
+//        setGridViewBG();
     }
 
     private void setGridViewBG() {
@@ -514,7 +514,7 @@ public class MainActivity extends Activity implements GridviewAdapter.OnItemGrid
         opt = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_error_48pt)
                 .showImageOnFail(R.drawable.ic_error_48pt)
-                .showImageOnLoading(R.drawable.loading)
+//                .showImageOnLoading(R.drawable.loading)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .resetViewBeforeLoading(false)
