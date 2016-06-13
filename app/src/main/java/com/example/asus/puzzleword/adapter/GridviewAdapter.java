@@ -120,8 +120,7 @@ public class GridviewAdapter extends BaseAdapter {
 
         final Button cell = (Button) gridView.findViewById(R.id.button);
         final TextView textViewNumberQuestion = (TextView) gridView.findViewById(R.id.tvItemSTT);
-//        final RelativeLayout backGround = (RelativeLayout) gridView.findViewById(R.id.BGLinear);
-
+        final RelativeLayout backGround = (RelativeLayout) gridView.findViewById(R.id.BGLinear);
         //set Row Height
         DisplayMetrics metrics = new DisplayMetrics();
         metrics = context.getResources().getDisplayMetrics();
@@ -141,7 +140,7 @@ public class GridviewAdapter extends BaseAdapter {
             cell.setFocusable(false);
             cell.setEnabled(false);
             cell.setBackgroundColor(Color.TRANSPARENT);
-//            backGround.setBackgroundColor(Color.TRANSPARENT);
+            backGround.setBackgroundColor(Color.TRANSPARENT);
             gridView.setEnabled(false);
             gridView.setFocusable(false);
             gridView.setClickable(false);
@@ -167,19 +166,16 @@ public class GridviewAdapter extends BaseAdapter {
 
         if (color[positionX][positionY] == NORMAL) {
 //            cell.setBackgroundColor(Color.WHITE);
-//            backGround.setBackgroundColor(Color.WHITE);
-            cell.setBackgroundResource(R.drawable.btn_white_cell);
+            backGround.setBackgroundColor(Color.WHITE);
         } else if (color[positionX][positionY] == TRANSPARENT) {
 //            cell.setBackgroundColor(Color.WHITE);
-//            backGround.setBackgroundColor(Color.TRANSPARENT);
+            backGround.setBackgroundColor(Color.TRANSPARENT);
         } else if (color[positionX][positionY] == MAIN_CLICKED) {
 //            cell.setBackgroundColor(Color.RED);
-//            backGround.setBackgroundColor(Color.RED);
-            cell.setBackgroundResource(R.drawable.btn_red_cell);
+            backGround.setBackgroundColor(Color.RED);
         } else if (color[positionX][positionY] == SUB_CLICKED) {
 //            cell.setBackgroundColor(Color.YELLOW);
-//            backGround.setBackgroundColor(Color.YELLOW);
-            cell.setBackgroundResource(R.drawable.btn_yellow_cell);
+            backGround.setBackgroundColor(Color.YELLOW);
         }
 
         cell.setOnClickListener(new View.OnClickListener() {

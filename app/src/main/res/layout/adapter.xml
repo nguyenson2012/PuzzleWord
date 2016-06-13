@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:layout_margin="0dp"
-        android:background="@drawable/btn_white_cell"/>
+        android:background="@android:color/transparent"/>
     <TextView
         android:id="@+id/tvItemSTT"
         android:layout_width="wrap_content"
